@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form name='odds_input_form'>
+        <label for="odds_1">Tip 1: </label>
+        <input id="odds_1" type=text name='odds_1'>
+        <br/><br/>
+        <label for="odds_x">Tip x: </label>
+        <input id="odds_x" type=text name='odds_x'>
+        <br/><br/>
+        <label for="odds_2">Tip 2: </label>
+        <input id="odds_2" type=text name='odds_2'>
+        <br/><br/>
+        <button id='submit-button'>klik</button>
+    </form>
+    <div id='result'></div>
+</body>
+<script>
+    btn=document.getElementById('submit-button')
+    console.log(btn)
+    btn.addEventListener('click', (e) =>{
+        e.preventDefault()
+
+        result_div = document.getElementById('result')
+        
+        let odds_1 = 1 / parseFloat(document.getElementById('odds_1').value)
+        let odds_x = 1 / parseFloat(document.getElementById('odds_x').value)
+        let odds_2 = 1 / parseFloat(document.getElementById('odds_2').value)
+        
+        
+        const odds_total = odds_1 + odds_x + odds_2
+        let total = odds_total - 1
+        total = 1 - (total / odds_total)
+
+        odds_1 = (odds_1 * total)
+        odds_x = (odds_x * total)
+        odds_2 = (odds_2 * total)
+
+        total_odds = odds_1 + odds_x + odds_2
+        let output_string = ''
+        output_string += `<p>Tip 1: ${(odds_1*100).toFixed(2)}% </p>`
+        output_string += `<p>Tip x: ${(odds_x*100).toFixed(2)}% </p>`
+        output_string += `<p>Tip 2: ${(odds_2*100).toFixed(2)}% </p>`
+
+
+        random_number = Math.random()*total_odds
+        if(random_number <= odds_1){
+            output_string += '<p>Tip 1 wins!</p>'
+        } else if(random_number <= odds_1 + odds_x){
+            output_string += '<p>Tip x wins!</p>'
+        } else{
+            output_string += '<p>Tip 2 wins!</p>'
+        }
+        result_div.innerHTML = output_string
+        console.log(random_number)
+        // ****************TEST*******************
+        // let h = 0;
+        // let d = 0
+        // let a = 0
+        // for(let i=1; i<=1000000;i++){
+        //     random_number = Math.random()*total_odds
+        //     if(random_number <= odds_1){
+        //         h++
+        //     } else if(random_number <= odds_1 + odds_x){
+        //         d++
+        //     } else{
+        //         a++
+        //     }
+        // }
+        // console.log('home: ', h)
+        // console.log('draw: ', d)
+        // console.log('away: ', a)
+        
+    })
+    
+
+    
+</script>
+</html>
